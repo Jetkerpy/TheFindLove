@@ -1,0 +1,188 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Sign Up
+{% endblock title %}
+
+
+
+
+{% block content %}
+
+<style>
+    .select{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        max-width: 500px;
+        gap: 1px;
+    }
+    .select__item{
+        padding: 10px;
+        cursor: pointer;
+        font-family: 'Heebo', sans-serif;
+        text-align: center;
+        border-radius: 3px;
+        background-color: #eeeeee;
+        transition: background 0.1s;
+    }
+
+    .select__item--selected{
+        background: #0a5071;
+        color: #ffffff;
+    }
+    .__hobbies_color{
+        color: #0a5071;
+    }
+</style>
+
+
+<div class="container-fluid">
+    <div class="row no-gutter">
+        <div class="row-md-12">
+            <div class="login d-flex align-items-center py-5">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-12 col-lg-7 mx-auto">
+
+                            <form action="" class="account-form p-4 rounded col-lg-10 mx-auto" method="post">
+                                {% csrf_token %}
+                                <h3 class="mb-2 font-weight-bold create_account__">Taza account jaratiw</h3>
+                                <p class="mb-4">Dizimnen o'tiwi ushin 1 minut waqtin'izdi aladi ha'm biypul.</p>
+                                {% if form.errors %}
+                                <p>Please correct the following errors</p>
+                                
+                                    {% for field in form %}
+                                        {% if field.errors %}
+                                            <div class="alert alert-primary" role="alert">
+                                                {{ field.label }}: {{ field.errors|striptags }}
+                                            </div>
+                                        {% endif %}
+
+                                    {% endfor %}
+
+                                {% endif %}
+                                <!-- FIO  -->
+                                <label>
+                                    {{ form.FIO.label }} 
+                                    <span class="text-muted small">(Talap etiledi, Familyan'iz, atin'iz ha'm a'ken'izdin' atin)</span>
+                                </label>
+                                {{ form.FIO }} 
+                                <!-- END FIO -->
+           
+                                <!-- EMAIL  -->
+                                <label>
+                                    {{ form.email.label }}
+                                    <span class="text-muted small">(Talap etiledi)</span>
+                                </label>
+                                {{ form.email }}
+                                <!-- END EMAIL -->
+
+                                <!-- PHONE NUMBER  -->
+                                <label>
+                                    {{ form.phone_number.label }}
+                                    <span class="text-muted small">(Toliq kiritesiz +99XXXXXXXXX)</span>
+                                </label>
+                                {{ form.phone_number }}
+                                <!-- END PHONE NUMBER -->
+
+                                <!-- GENDER  -->
+                                <label>
+                                    {{ form.gender.label }}
+                                    <span class="text-muted small">(Talap etiledi)</span>
+                                </label>
+                                {{ form.gender }}
+                                <!-- END GENDER -->
+                  
+                                <!-- BIRTHDAY  -->
+                                <label>
+                                    {{ form.birthday.label }}
+                                    <span class="text-muted small">(18 jastan joqari boliwin'iz kerek)</span>
+                                </label>
+                                {{ form.birthday }}
+                                <!-- END BIRTHDAY -->
+
+                                <!-- HOBBIES  -->
+                                <div class="text-center">
+                                    <span class="lead"><small></small></span>
+                                    <figure>
+                                        <blockquote class="blockquote">
+                                          <p><b class="__hobbies_color">Qizig'iwshilig'in'iz boyisha saylan'</b></p>
+                                        </blockquote>
+                                        <figcaption class="blockquote-footer">
+                                          Keminde <mark>birewin</mark> saylawin'iz kerek boladi
+                                        </figcaption>
+                                      </figure>
+                                </div>
+                                <input type="hidden" id="selected_hobbies" name="hobbies">
+                                <div class="select">
+                                    {% for hobby in hobbies %}
+                                    <div class="select__item" id="hobby_{{ hobby.id }}" onclick="changeBackgroundColor('{{ hobby.id }}')">
+                                        {{ hobby.title }}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <br>
+                                <!-- END HOBBIES  -->
+                  
+                                <!-- PASSWORD -->
+                                <label>
+                                    {{ form.password.label }}
+                                    <span class="text-muted small"></span>
+                                </label>
+                                <small class="form-text text-muted mb-4 small">
+                                    (Keminde 8 characters ha'm bir sannan ibarat boliwi kerek)
+                                </small>
+                                {{ form.password }}
+         
+                                <!-- PASSWORD2  -->
+                                <label>
+                                    {{ form.password2.label }}
+                                    <span class="text-muted small">(Talap etiledi)</span>
+                                </label>
+                                {{ form.password2 }}
+                                <!-- END PASSWORDS -->
+
+                                <!-- REGISTER BTN -->
+                                <button class="signup_btn__ py-2 mb-4 mt-5 fw500 w-100" type="submit">
+                                    O'tiw
+                                </button>
+                                <!-- Already have an account -->
+                                <hr>
+                                <p class="text-center already_have__">
+                                    <a href="{% url 'account:sign_in'%}">A'lleqashan dizimnen o'tdin'izba?</a>
+                                </p>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- JAVASCRIPT -->
+<script>
+    function changeBackgroundColor(itemId) {
+    var item = document.getElementById('hobby_' + itemId);
+    let hiddenInput = document.getElementById("selected_hobbies")
+    let selected_hobbies = hiddenInput.value.split(',');
+    
+    let index = selected_hobbies.indexOf(itemId);
+
+    if (index > -1) {
+        selected_hobbies.splice(index, 1);
+        item.classList.remove('select__item--selected');
+    } else {
+        selected_hobbies.push(itemId);
+        item.classList.add('select__item--selected');
+    }
+    hiddenInput.value = selected_hobbies.join(',');
+    }
+</script>
+<!-- END JAVASCRIPT -->
+
+
+{% endblock content %}
+

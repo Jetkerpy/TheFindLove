@@ -1,0 +1,126 @@
+
+{% load static %}
+
+<nav>
+    <div class="banner_bg_main pb-5">
+      <!-- logo section start -->
+      <div class="logo_section">
+         <div class="container">
+            <div class="row">
+               <div class="col-sm-12">
+                  <div class="logo"><a href="/" class="text-decoration-none logo_o_bazar"><b>The FindLove</b></a></div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- logo section end -->
+      <!-- header section start -->
+      <div class="header_section">
+         <div class="container">
+            <div class="containt_main">
+               <div id="mySidenav" class="sidenav">
+                  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                  <a href="/">Home</a>
+                  
+               </div>
+               <span class="toggle_icon" onclick="openNav()"><img src="{% static 'toggle-icon.png'%}"></span>
+  
+               <div class="main">
+                  <!-- Another variation with a button -->
+                  <form action="" method="get">
+                    <div class="input-group">
+                      <input type="text" name="q" class="form-control" placeholder="Search">
+                      <div class="input-group-append">
+                         <button class="btn btn-secondary" type="submit" style="background-color: #f23322; border-color:#f22222 ">
+                         <i class="fa fa-search"></i>
+                         </button>
+                      </div>
+                    </div>
+                  </form>
+               </div>
+               <div class="header_box">
+                <!-- DASHBOARD LOGIN LOGOUT -->
+                  <div class="dropdown dashboard_login_logout">
+                    <a href="#" class="dashboard_a" id = "navbarDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                        <b class="small hello_username__">Hello,
+                          {% if request.user.is_authenticated %}
+                              {{ request.user.full_name }}
+                          {% else %}
+                              LOGIN
+                          {% endif %}
+                        </b><br>
+                        <span class="fs15 fw200 account_lists__"><b>Kabinetim</b></span>
+                    </a>
+                    <!-- Drop down menu -->
+                    <div class="dropdown-menu rounded-0" aria-labelledby="navbarDropdown">
+                      <div class="card border-0">
+                        <div class="card-body">
+                          <h6 class="card-title my_dashboard___"><b>My Dashboard</b></h6>
+                          <ul class="list-group list-group-flush dropdown-account-link">
+                            {% if request.user.is_authenticated %}
+                              <a href="{% url 'account:my_dashboard' request.user.profile.id %}" class="btn___ text-reset small list-group-item p-0 pb-1 border=0 dropdown-account-link"><b class="__kiriw_of_color">Profile</b></a>
+                              <a href="{% url 'account:sign_out'%}" class="btn___ text-reset small list-group-item p-0 pb-1 border=0 dropdown-account-link"><b class="__kiriw_of_color">Shig'iw</b></a>
+                            {% else %}
+                            <a href="{% url 'account:sign_in'%}" class="btn___ text-reset small list-group-item p-0 pb-1 border=0 dropdown-account-link"><b class="__kiriw_of_color">Kiriw</b></a>
+                            {% endif %}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- END DASHBOARD LOGIN LOGOUT -->
+  
+
+                  <div class="login_menu">
+                     <ul>
+                      <!-- NOTIFICATION BUTTON -->
+                        <li>
+                          <a class="position-relative icon__" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#f2f2ed}</style><path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"/></svg>
+                            <span id="wishlist_how_many" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                              {% if wishlist|length > 0%}
+                                  {{ wishlist|length }}
+                              {% else %}
+                                  0
+                              {% endif %}
+                              <span class="visually-hidden">unread messages</span>
+                            </span>
+                          </a>
+                        </li>
+                         <!-- END NOTIFICATION BUTTON -->
+                         <!-- MESSAGE BUTTON -->
+                        <li class="mx-2">
+                          <a class="position-relative icon__" href="#">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#e8eaed}</style><path d="M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z"/></svg>
+                            <span id="total_quantity" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                              {% if basket|length > 0 %}
+                                  {{ basket|length }}
+                              {% else %}
+                                  0
+                              {% endif %}
+                              <span class="visually-hidden">unread messages</span>
+                            </span>
+                          </a>
+                        </li>
+                        <!-- END MESSAGE BUTTON -->
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- header section end -->
+   </div>
+  </nav>
+       <!-- banner bg main end -->
+  
+       <script>
+        function openNav() {
+          document.getElementById("mySidenav").style.width = "250px";
+        }
+        
+        function closeNav() {
+          document.getElementById("mySidenav").style.width = "0";
+        }
+     </script>

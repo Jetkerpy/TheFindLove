@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+
+
+
+{% block content %}
+
+<style>
+    .card {
+        background-color: #efefef;
+        border: none;
+        cursor: pointer;
+        transition: all 0.5s;
+    }
+
+    .image img {
+        transition: all 0.5s
+    }
+
+    .card:hover .image img {
+        transform: scale(1.5)
+    }
+
+    .___btn_ {
+        height: 140px;
+        width: 140px;
+        border-radius: 50%
+    }
+
+    .name {
+        font-size: 18px;
+        font-weight: bold
+    }
+
+    .idd {
+        font-size: 14px;
+        font-weight: 600
+    }
+
+    .idd1 {
+        font-size: 12px
+    }
+
+    .number {
+        font-size: 22px;
+        font-weight: bold
+    }
+
+    .follow {
+        font-size: 12px;
+        font-weight: 500;
+        color: #444444
+    }
+
+    .btn1 {
+        height: 40px;
+        width: 150px;
+        border: none;
+        background-color: #000;
+        color: #aeaeae;
+        font-size: 15px
+    }
+
+    .text span {
+        font-size: 13px;
+        color: #545454;
+        font-weight: 500
+    }
+
+    .icons i {
+        font-size: 19px
+    }
+
+    hr .new1 {
+        border: 1px solid
+    }
+
+    .join {
+        font-size: 14px;
+        color: #ffff;
+        font-weight: bold;
+        background-color: #0a5071;
+        padding: 5px;
+        border-radius: 4px;
+    }
+
+    .date {
+        background-color: #ccc
+    }
+    .added_name_{
+        color: #0a5071;
+    }
+    .added_name_:hover{
+        color: #f26522;
+    }
+</style>
+
+<div class="container mt-4 mb-4 p-3 "> 
+    <div class="row row-cols-2 row-cols-sm-3 row-cols-lg-3 g-3">
+        {% for profile in profiles %}
+            <div class="col">
+                <div class="card p-4"> 
+                    <div class=" image d-flex flex-column justify-content-center align-items-center"> 
+                        <!-- <button class="___btn_ btn-secondary"> 
+                            <img src="https://i.imgur.com/wvxPV9S.png" height="100" width="100" />
+                        </button>  -->
+                        <img src="{{ profile.avatar.url }}" alt="{{ profile.bio}}" width="100" height="100" class="img-fluid rounded-circle mb-3 img-thumbnail shadow-sm">
+                        <span class="name mt-3">{{ profile.user.full_name }}</span> 
+                        <span class="idd added_name_">{{ profile.user.added_name}}</span>
+                        <span class="mt-2 idd"><bark>Qizig'iwshiliqlari</bark></span> 
+                        <div class="d-flex flex-row justify-content-center align-items-center gap-2"> 
+                            {% for hobby in profile.hobbies.all %}
+                            <span class="idd1">{{ hobby.title }}</span> 
+                            {% endfor %}
+                        </div> 
+                        <div class="d-flex flex-row justify-content-center align-items-center mt-3"> 
+                            <span class="number">1069 <span class="follow">Likes</span></span> 
+                        </div> 
+                        <div class="px-2 mt-4"> 
+                            <span class="join">Joined {{ profile.created|date:"F, Y"}}</span> 
+                        </div> 
+                    </div> 
+                </div>
+            </div>
+        {% endfor  %}
+    </div>
+</div>
+
+
+{% endblock content %}
