@@ -4,10 +4,10 @@ from django.contrib.auth.models import (AbstractBaseUser, AbstractUser,
                                         BaseUserManager, PermissionsMixin)
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from django_resized import ResizedImageField
 
 from .utils import validate_age
 from .validators import validate_email, validate_uzb_phone_number
-from django_resized import ResizedImageField
 
 # Create your models here.
 
@@ -104,12 +104,8 @@ class UserBase(AbstractBaseUser, PermissionsMixin):
 
 
     @property
-    def full_name(self):
-        return f'{self.first_name} {self.last_name}'
-
-    @property
     def user_name(self):
-        return self.first_name
+        return f"#{self.first_name}"
 
     @property
     def added_name(self):
